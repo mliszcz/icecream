@@ -1,6 +1,6 @@
 # quite some macros are taken from distcc
 
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 
 # ====================
 # Version informations
