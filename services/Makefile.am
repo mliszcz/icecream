@@ -1,13 +1,13 @@
 lib_LTLIBRARIES = libicecc.la
 libicecc_la_SOURCES = job.cpp comm.cpp exitcode.cpp getifaddrs.cpp logging.cpp ncpus.c pipes.cpp tempfile.c platform.cpp gcc.cpp util.cpp
 libicecc_la_LIBADD = \
-	$(LZO_LDADD) \
+	$(LIBLZO2_LIBS) \
 	$(LIBZSTD_LIBS) \
 	$(LIBCAP_NG_LIBS) \
 	$(DL_LDADD)
 
-libicecc_la_CFLAGS = -fPIC -DPIC
-libicecc_la_CXXFLAGS = -fPIC -DPIC
+libicecc_la_CFLAGS = -fPIC -DPIC $(LIBLZO2_CFLAGS)
+libicecc_la_CXXFLAGS = -fPIC -DPIC $(LIBLZO2_CFLAGS)
 
 icedir = $(includedir)/icecc
 ice_HEADERS = \

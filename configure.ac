@@ -30,6 +30,7 @@ AC_LANG([C++])
 # ===========================
 AC_PROG_CC
 AC_PROG_CXX
+AC_PROG_SED
 
 AC_MSG_CHECKING([for C++11 support (-std=c++11)])
 CXXFLAGS="$CXXFLAGS -std=c++11"
@@ -208,9 +209,13 @@ AC_CHECK_FUNCS([flock lockf])
 AC_CHECK_FUNCS([strsignal])
 AC_CHECK_FUNCS([getloadavg])
 
-AC_CHECK_LIB(lzo2, lzo1x_1_compress, LZO_LDADD=-llzo2,
-	AC_MSG_ERROR([Could not find lzo2 library - please install lzo-devel]))
-AC_SUBST(LZO_LDADD)
+PKG_CHECK_MODULES([LIBLZO2], [lzo2], [[
+    # Remove the /lzo suffix from the -I include directory. LZO refers to its
+    # header files using this prefix, for example:. #include <lzo/lzoconf.h>.
+    # Instead, the parent directory (containing the /lzo directory) should be
+    # added to the preprocessor search path.
+    LIBLZO2_CFLAGS=`echo "$LIBLZO2_CFLAGS" | $SED -E 's@/lzo($|\\s)@ @g'`
+]])
 
 PKG_CHECK_MODULES([LIBZSTD], [libzstd])
 
