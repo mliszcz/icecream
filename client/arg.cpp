@@ -690,6 +690,9 @@ int analyse_argv(const char * const *argv, CompileJob &job, bool icerun, list<st
             } else if (str_startswith("--target=", a)) {
                 seen_target = true;
                 args.append(a, Arg_Rest);
+            } else if (str_startswith("-std=", a)) {
+                standard = a + strlen("-std=");
+                args.append(a, Arg_Rest);
             } else if (str_equal("-Wunused-macros", a)
                        || str_equal("-Werror=unused-macros", a)) {
                 wunused_macros = true;
